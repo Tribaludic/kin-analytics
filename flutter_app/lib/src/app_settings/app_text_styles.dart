@@ -11,7 +11,7 @@ class AppTextStyle {
     );
   }
 
-  static TextStyle titleText({Color color = AppColors.primaryColor, FontWeight fontWeight = FontWeight.bold}) {
+  static TextStyle titleText({Color color = AppColors.secondaryColor, FontWeight fontWeight = FontWeight.bold}) {
     return TextStyle(
       color: color,
       fontSize: 30,

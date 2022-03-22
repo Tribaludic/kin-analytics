@@ -10,6 +10,7 @@ import 'package:flutter_app/src/app_settings/app_strings.dart';
 import 'package:flutter_app/src/app_settings/app_text_styles.dart';
 import 'package:flutter_app/src/pages/credit_card/credit_card_model.dart';
 import 'package:flutter_app/src/pages/credit_card/credit_card_page_controller.dart';
+import 'package:flutter_app/src/widgets/rectangle_button.dart';
 
 class CreditCardPage extends StatefulWidget {
   const CreditCardPage({Key? key}) : super(key: key);
@@ -61,44 +62,84 @@ class _CreditCardPageState extends State<CreditCardPage> {
                     cvv: snapshot.data!.cvv,
                     bankName: snapshot.data!.bankName,
                     cardType: snapshot.data!.cardType,
-                    // Optional if you want to override Card Type
                     showBackSide: snapshot.data!.showBackSide,
                     frontBackground: CardBackgrounds.black,
                     backBackground: CardBackgrounds.white,
                     showShadow: true,
-                    textExpDate: 'Exp. Date',
-                    textName: 'Name',
-                    textExpiry: 'MM/YY');
+                    textExpDate: AppStrings.expirationDateLabel,
+                    textName: AppStrings.cardOwnerName,
+                    textExpiry: AppStrings.expirationDateHint);
               }),
           const SizedBox(
-            height: 5,
+            height: 20,
           ),
           TextField(
-            style: AppTextStyle.bodyText(),
-            controller: pageController.cardNumberController,
-            inputFormatters: InputFormatterUtils.numberInputFormatter,
-            keyboardType: TextInputType.number,
-            onChanged: pageController.onCardNumberChange,
-            decoration: AppDecoration.inputDecoration(hintText: AppStrings.cardNumber,
-                icon: const Icon(Icons.credit_card, color: AppColors.secondaryColor,))
-          ),
+              style: AppTextStyle.bodyText(),
+              controller: pageController.bankNameController,
+              inputFormatters: InputFormatterUtils.textInputFormatter,
+              keyboardType: TextInputType.name,
+              textCapitalization: TextCapitalization.words,
+              onChanged: pageController.onBankNameChange,
+              decoration: AppDecoration.inputDecoration(
+                  hintText: AppStrings.bankName,
+                  icon: const Icon(
+                    Icons.account_balance,
+                    color: AppColors.secondaryColor,
+                  ))),
           TextField(
-            style: AppTextStyle.bodyText(),
+              style: AppTextStyle.bodyText(),
+              controller: pageController.cardNumberController,
+              inputFormatters: InputFormatterUtils.numbersOnlyInputFormatter,
+              keyboardType: TextInputType.number,
+              onChanged: pageController.onCardNumberChange,
+              decoration: AppDecoration.inputDecoration(
+                  hintText: AppStrings.cardNumber,
+                  icon: const Icon(
+                    Icons.credit_card,
+                    color: AppColors.secondaryColor,
+                  ))),
+          TextField(
+              style: AppTextStyle.bodyText(),
               controller: pageController.cardHolderNameController,
-            inputFormatters: InputFormatterUtils.cardHolderInputFormatter,
-            keyboardType: TextInputType.name,
-            onChanged: pageController.onCardHolderChange,
-              decoration: AppDecoration.inputDecoration(hintText: AppStrings.cardHolderName,
-                  icon: const Icon(Icons.person_rounded, color: AppColors.secondaryColor,))
-          ),
+              inputFormatters: InputFormatterUtils.cardHolderInputFormatter,
+              keyboardType: TextInputType.name,
+              textCapitalization: TextCapitalization.words,
+              onChanged: pageController.onCardHolderChange,
+              decoration: AppDecoration.inputDecoration(
+                  hintText: AppStrings.cardOwnerName,
+                  icon: const Icon(
+                    Icons.person_rounded,
+                    color: AppColors.secondaryColor,
+                  ))),
           TextField(
-            style: AppTextStyle.bodyText(),
+              style: AppTextStyle.bodyText(),
+              controller: pageController.expDateController,
+              inputFormatters: InputFormatterUtils.expirationDateInputFormatter,
+              keyboardType: TextInputType.number,
+              onChanged: pageController.onExpDateChange,
+              decoration: AppDecoration.inputDecoration(
+                  hintText: AppStrings.expirationDateHint,
+                  icon: const Icon(
+                    Icons.calendar_today,
+                    color: AppColors.secondaryColor,
+                  ))),
+          TextField(
+              obscureText: true,
+              style: AppTextStyle.bodyText(),
               controller: pageController.cardCVVController,
-            inputFormatters: InputFormatterUtils.numberInputFormatter,
-            keyboardType: TextInputType.number,
-            onChanged: pageController.onCardCVVChange,
-              decoration: AppDecoration.inputDecoration(hintText: AppStrings.cardCvv,
-                  icon: const Icon(Icons.key, color: AppColors.secondaryColor,))
+              inputFormatters: InputFormatterUtils.numbersOnlyInputFormatter,
+              keyboardType: TextInputType.number,
+              onChanged: pageController.onCardCVVChange,
+              decoration: AppDecoration.inputDecoration(
+                  hintText: AppStrings.cardCvv,
+                  icon: const Icon(
+                    Icons.key,
+                    color: AppColors.secondaryColor,
+                  ))),
+          const SizedBox(height: 20,),
+          Padding(
+            padding: const EdgeInsets.only(left: 40, right: 40),
+            child: RectangleButton(text: pageController.payAmount, callback: () => pageController.onPayTap(context) ,color: AppColors.secondaryColor),
           ),
         ],
       ),

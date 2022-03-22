@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/Utils/validation_utils.dart';
 import 'package:flutter_app/src/app_settings/app_routes.dart';
 import 'package:flutter_app/src/app_settings/app_strings.dart';
 import 'package:flutter_app/src/widgets/alert_modal.dart';
+import 'package:flutter_app/src/widgets/loading.dart';
 
 class LoginPageController {
 
@@ -43,6 +43,10 @@ class LoginPageController {
       );
       return;
     }
+
+    Loading.show(context, AppStrings.loginLoading);
+    await Future.delayed(const Duration(seconds: 3));
+    Loading.close(context);
 
     await Navigator.pushReplacementNamed(context, AppRoutes.home);
   }
