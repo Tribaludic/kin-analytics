@@ -27,5 +27,6 @@ class AppStrings{
   static const String payError = 'Pay Error';
   static const String successfulPayingMessage = 'Paying complete, Thanks for trusting us';
   static const String invalidExpirationDate = 'Invalid expiration date';
+  static const String payErrorServer = 'There was an error processing the payment, please try again later';
 }
 

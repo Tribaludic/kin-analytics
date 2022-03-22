@@ -4,6 +4,7 @@ import 'package:awesome_card/extra/card_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/app_settings/app_strings.dart';
 import 'package:flutter_app/src/pages/credit_card/credit_card_model.dart';
+import 'package:flutter_app/src/service/mock_service.dart';
 import 'package:flutter_app/src/widgets/alert_modal.dart';
 import 'package:flutter_app/src/widgets/loading.dart';
 import 'package:rxdart/rxdart.dart';
@@ -158,16 +159,32 @@ class CreditCardPageController{
       return;
     }
 
+    final bool result = await MockService.pay();
 
-    await AlertModal.show(
-        context:context,
-        data:const AlertModalData(
-            iconData:Icons.check_circle,
-            iconColor: Colors.grey,
-            title: AppStrings.payingComplete,
-            message: AppStrings.successfulPayingMessage
-        ));
-    return;
+   if(result){
+     await AlertModal.show(
+         context:context,
+         data:const AlertModalData(
+             iconData:Icons.check_circle,
+             iconColor: Colors.green,
+             title: AppStrings.payingComplete,
+             message: AppStrings.successfulPayingMessage
+         ));
+   }else{
+     await AlertModal.show(
+         context:context,
+         data:const AlertModalData(
+             iconData:Icons.error,
+             iconColor: Colors.red,
+             title: AppStrings.payError,
+             message: AppStrings.payErrorServer
+         ));
+
+   }
+
+
+
+
 
 
   }
