@@ -11,12 +11,15 @@ class MockService {
 
     const path = 'https://kin-analitics.com/api/v1';
 
+    //50% of success and 50% of fail
+    final randomValue = Random().nextInt(2);
+
     try {
       dioAdapter.onGet(
         path,
             (server) =>
             server.reply(
-                Random().nextInt(2) == 0 ? 200 : 402, {'message': 'Success!'}),
+                randomValue == 0 ? 200 : 402, {'message': randomValue == 0 ? 'Success!' : 'Error'}),
       );
 
       final response = await dio.get(path);
